@@ -4,12 +4,22 @@ add_action('register_form', 'ppa_custom_registration_form');
 function ppa_custom_registration_form()
 {
     $first_name = !empty($_POST['first_name']) ? sanitize_text_field($_POST['first_name']) : '';
+    $last_name = !empty($_POST['last_name']) ? sanitize_text_field($_POST['last_name']) : '';
 
     ?>
     <p>
         <label for="first_name">
             <?php esc_html_e('First Name', 'ppa') ?><br />
             <input type="text" id="first_name" name="first_name" value="<?php echo esc_attr($first_name); ?>" class="input />
+        </label>
+    </p>
+    <?php
+
+    ?>
+    <p>
+        <label for=" last_name">
+            <?php esc_html_e('Last Name', 'ppa') ?><br />
+            <input type="text" id="last_name" name="last_name" value="<?php echo esc_attr($last_name); ?>" class="input />
         </label>
     </p>
     <?php
@@ -22,6 +32,13 @@ function ppa_user_register($user_id)
     if (!empty($_POST['first_name'])) {
         update_user_meta($user_id, 'first_name', $_POST['first_name']);
     }
+
+    if (!empty($_POST['last_name'])) {
+        update_user_meta($user_id, 'last_name', $_POST['last_name']);
+    }
+
+    // create service hours field
+    update_user_meta($user_id, 'service_hours', 0);
 }
 
 // Sub email for username in registration process
