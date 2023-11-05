@@ -12,6 +12,7 @@ function ppa_create_service_request_table()
         title VARCHAR(255) NOT NULL,
         description TEXT NOT NULL,
         hours DECIMAL(10,2) NOT NULL,
+        status VARCHAR(50) NOT NULL,
         PRIMARY KEY (id)
     );";
 

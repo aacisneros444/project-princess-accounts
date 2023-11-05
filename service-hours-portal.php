@@ -91,6 +91,7 @@ function ppa_create_or_update_request_in_db()
                     'title' => $title,
                     'description' => $description,
                     'hours' => $hours,
+                    'status' => 'pending approval'
                 )
             );
         } else if (isset($_POST['update_request'])) {
@@ -183,6 +184,7 @@ function ppa_render_request_form($isUpdating = false)
     $requestTitle = '';
     $requestDescription = '';
     $requestHours = '';
+    $requestStatus = '';
     if ($isUpdating) {
         $request_id = isset($_GET['request_id']) ? intval($_GET['request_id']) : -1;
         if ($request_id == -1) {
@@ -195,6 +197,7 @@ function ppa_render_request_form($isUpdating = false)
             $requestTitle = $request_data->title;
             $requestDescription = $request_data->description;
             $requestHours = $request_data->hours;
+            $requestStatus = $request_data->status;
         } else {
             echo 'Failed to get request';
             return;
@@ -203,6 +206,16 @@ function ppa_render_request_form($isUpdating = false)
         if (get_current_user_id() != $user_id) {
             echo 'Unauthorized access';
             return;
+        }
+
+        if ($request_data->status != 'pending approval') {
+            if ($requestStatus == 'approved') {
+                echo 'Request was already approved, nothing to do here.';
+                return;
+            } else {
+                echo 'Request was denied, nothing to do here.';
+                return;
+            }
         }
     }
 
@@ -330,7 +343,7 @@ function ppa_service_hour_requests_list()
         // Query the database to retrieve requests for the logged-in user
         $requests = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT * FROM $table_name WHERE user_id = %d",
+                "SELECT * FROM $table_name WHERE user_id = %d AND status = 'pending approval'",
                 $current_user_id
             )
         );
