@@ -24,7 +24,7 @@ function ppa_update_db_for_decision()
         update_user_meta($user_id, 'service_hours', $total_service_hours);
     }
 
-    // Return a response if necessary
+    echo json_encode(array('message' => 'Request processed successfully'));
     wp_die();
 }
 ?>

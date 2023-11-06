@@ -1,0 +1,63 @@
+.service-hour-request-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  padding: 5px;
+  border-radius: 5%;
+  background-color: #fff;
+}
+
+.user-avatar {
+  border-radius: 50%;
+  max-width: 20%;
+  max-height: 20%;
+}
+
+.user-display-div {
+  display: flex;
+  align-items: center;
+}
+
+.name-email-div {
+  margin-left: 10px;
+}
+
+.card-service-hours {
+  width: 20%;
+}
+
+.card-service-hr-div {
+  display: flex;
+  align-items: center;
+}
+
+/* Style for the container holding the grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/**/
+/* CSS to style the upload button and adjust alignment */
+.avatar-container {
+  text-align: center;
+}
+
+.file-upload-container {
+  text-align: center;
+}
+
+.upload-button-container {
+  text-align: center;
+  margin-top: 10px; /* Adjust the margin as needed */
+}
+
+.upload-button-container input[type="submit"] {
+  width: 50px !important; /* Adjust the width as needed */
+  padding: 5px 15px; /* Adjust the padding as needed */
+}
+
+.submit-button-pfp {
+  height: 50px !important;
+  width: 50px;
+}
