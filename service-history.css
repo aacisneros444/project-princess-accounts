@@ -1,0 +1,71 @@
+.member-service-table,
+.member-service-events-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.member-info-and-events-cell {
+  overflow-x: auto;
+}
+
+.member-service-events-table th,
+.member-service-events-table td {
+  padding: 0.5rem;
+}
+
+/* Alight table headers Left */
+.member-service-events-table th {
+  background: hsl(0 0% 0% / 0.025);
+  text-align: left;
+  color: rgb(117, 117, 117);
+}
+
+.edit-row-button {
+  width: 50%;
+}
+
+/* Table cell */
+.editable-cell {
+  width: 25%;
+}
+
+/* Input field for editing cell data */
+.editing-input {
+  width: 100%;
+}
+
+.member-service-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.member-service-table th,
+.member-service-table td {
+  padding: 0.5rem;
+}
+
+.member-service-table th {
+  background: #58e47d;
+  text-align: left;
+  color: rgb(24, 24, 24);
+}
+
+.user-info-cell {
+  width: 25%;
+}
+
+.user-info-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.user-info-cell-pfp {
+  border-radius: 50%;
+  max-height: 50px;
+  max-width: 50px;
+  margin-right: 5%;
+}

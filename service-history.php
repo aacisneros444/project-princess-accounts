@@ -8,7 +8,7 @@ function ppa_render_service_history()
         return;
     }
 
-    wp_enqueue_style('ppa-admin-hours-cs', plugins_url('admin-dash-service-hours.css', __FILE__), array(), '1.0');
+    wp_enqueue_style('ppa-service-history-cs', plugins_url('service-history.css', __FILE__), array(), '1.0');
 
     $userID = get_current_user_id();
 
