@@ -9,6 +9,8 @@ function ppa_get_total_hours_for_member_db()
 
     $total_approved_hours = $wpdb->get_var($wpdb->prepare("SELECT SUM(hours) FROM {$wpdb->prefix}ppa_service_hour_requests WHERE user_id = %d AND status = 'approved'", $user_id));
 
+    ppa_gen_active_member_spreadsheet();
+
     echo json_encode(array('hours' => $total_approved_hours));
     wp_die();
 }

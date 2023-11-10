@@ -1,5 +1,6 @@
 <?php
 
+// Server-side update for ajax to change service hour request data.
 add_action('wp_ajax_ppa_update_request_in_db', 'ppa_update_request_in_db');
 function ppa_update_request_in_db()
 {

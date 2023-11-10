@@ -15,6 +15,13 @@ function ppa_admin_dash_service_hours()
 
 function ppa_render_active_service_member_hours_page()
 {
+    echo '<h2>Active Member Service Hours</h2>';
+    echo '<p>Members will appear in the table below if they have submitted at least one service hour request this semester.<p>';
+
+    // Output the download link
+    $downloadLink = admin_url('admin-ajax.php?action=ppa_generate_and_download_spreadsheet');
+    echo '<p>You can download this data to open in Excel/Google Sheets <a href="' . esc_url($downloadLink) . '">here</a></p>';
+
     ppa_render_active_service_member_table();
 }
 
@@ -41,7 +48,7 @@ function ppa_member_info_and_events_row($user_id)
     echo '<tr>';
     echo '<th>Member Name</th>';
     echo '<th>Email</th>';
-    echo '<th>Service Hours</th>';
+    echo '<th>Total Service Hours</th>';
     echo '<th></th>';
     echo '<tr>';
 
