@@ -16,24 +16,29 @@ function ppa_admin_dash_service_hours()
 function ppa_render_active_service_member_hours_page()
 {
     echo '<h2>Active Member Service Hours</h2>';
-    echo '<p>Members will appear in the table below if they have submitted at least one service hour request this semester.<p>';
+    echo '<p>Members will appear in the table below if they have at least one approved service hour request.<p>';
 
     // Output the download link
     $downloadLink = admin_url('admin-ajax.php?action=ppa_generate_and_download_spreadsheet');
     echo '<p>You can download this data to open in Excel/Google Sheets <a href="' . esc_url($downloadLink) . '">here</a> (note: edits made to downloaded data will not be reflected on the website)</p>';
 
     ppa_render_active_service_member_table();
-
-    // Add the delete button and confirmation script
-    echo '<button class="delete-all-data-btn" id="delete-all-data-btn">DELETE ALL SERVICE DATA</button>';
 }
 
 function ppa_render_active_service_member_table()
 {
     $active_user_ids = ppa_get_active_user_ids_db();
+    if (count($active_user_ids) == 0) {
+        echo '<p>--No active members yet--</p>';
+        return;
+    }
+
     foreach ($active_user_ids as $user_id) {
         ppa_member_info_and_events_row($user_id, events_editable: true);
     }
+
+    // Add the delete button and confirmation script
+    echo '<button class="delete-all-data-btn" id="delete-all-data-btn">DELETE ALL SERVICE DATA</button>';
 }
 
 // Create a "cell" for an active member, displaying their info and service hour events.
@@ -131,8 +136,7 @@ function ppa_get_active_user_ids_db()
     global $wpdb;
     $service_hour_requests_table = $wpdb->prefix . 'ppa_service_hour_requests';
 
-    $unique_user_ids = $wpdb->get_col("SELECT DISTINCT user_id FROM $service_hour_requests_table");
-
+    $unique_user_ids = $wpdb->get_col("SELECT DISTINCT user_id FROM $service_hour_requests_table WHERE status='approved'");
     return $unique_user_ids;
 }
 
