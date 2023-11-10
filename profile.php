@@ -33,6 +33,8 @@ function ppa_display_member_profile()
             <?php echo $service_hours ?>
             <br>
             <a href="<?php echo home_url('service-hours-portal') ?>">Make a service hours request</a>
+            <br>
+            <a href="<?php echo home_url('member-service-history') ?>">See service history</a>
         </p>
         <?php
 

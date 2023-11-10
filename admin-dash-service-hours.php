@@ -20,7 +20,7 @@ function ppa_render_active_service_member_hours_page()
 
     // Output the download link
     $downloadLink = admin_url('admin-ajax.php?action=ppa_generate_and_download_spreadsheet');
-    echo '<p>You can download this data to open in Excel/Google Sheets <a href="' . esc_url($downloadLink) . '">here</a></p>';
+    echo '<p>You can download this data to open in Excel/Google Sheets <a href="' . esc_url($downloadLink) . '">here</a> (note: edits made to downloaded data will not be reflected on the website)</p>';
 
     ppa_render_active_service_member_table();
 }
@@ -29,12 +29,12 @@ function ppa_render_active_service_member_table()
 {
     $active_user_ids = ppa_get_active_user_ids_db();
     foreach ($active_user_ids as $user_id) {
-        ppa_member_info_and_events_row($user_id);
+        ppa_member_info_and_events_row($user_id, events_editable: true);
     }
 }
 
 // Create a "cell" for an active member, displaying their info and service hour events.
-function ppa_member_info_and_events_row($user_id)
+function ppa_member_info_and_events_row($user_id, $events_editable = true)
 {
     $user_info = ppa_get_user_info_db($user_id);
 
@@ -70,7 +70,7 @@ function ppa_member_info_and_events_row($user_id)
 
     $approved_service_hour_requests = ppa_get_approved_service_hours_requests_db($user_id);
     foreach ($approved_service_hour_requests as $request) {
-        echo ppa_service_event_row($request['id'], $request['title'], $request['event_date'], $request['hours']);
+        echo ppa_service_event_row($request['id'], $request['title'], $request['event_date'], $request['hours'], $events_editable);
     }
 
     echo '</table>';
@@ -103,7 +103,7 @@ function ppa_member_info_row($name, $email, $hours, $avatar_url)
 }
 
 // Create a service event row
-function ppa_service_event_row($request_id, $event_name, $date, $hours)
+function ppa_service_event_row($request_id, $event_name, $date, $hours, $editable)
 {
     ob_start();
 
@@ -111,9 +111,11 @@ function ppa_service_event_row($request_id, $event_name, $date, $hours)
     echo '<td class="editable-cell" data-column="event_name">' . $event_name . '</td>';
     echo '<td class="editable-cell" data-column="event_date">' . $date . '</td>';
     echo '<td class="editable-cell" data-column="event_hours">' . $hours . '</td>';
-    echo '<td>';
-    echo '<button class="edit-row-button">Edit</button>';
-    echo '</td>';
+    if ($editable) {
+        echo '<td>';
+        echo '<button class="edit-row-button">Edit</button>';
+        echo '</td>';
+    }
     echo '</tr>';
 
     $output = ob_get_clean();

@@ -44,6 +44,9 @@ function ppa_gen_active_member_spreadsheet()
             'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
             'startColor' => ['argb' => '58e47d'],
         ],
+        'font' => [
+            'bold' => true,
+        ],
     ];
 
     // Set styles for event headers
