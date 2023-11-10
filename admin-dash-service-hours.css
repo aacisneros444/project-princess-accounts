@@ -65,4 +65,6 @@
 
 .delete-all-data-btn {
   margin-top: 1.5rem;
+  background: #f47b7b;
+  font-weight: bold;
 }
