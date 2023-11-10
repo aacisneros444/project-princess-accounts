@@ -76,6 +76,11 @@ function ppa_create_or_update_request_in_db()
         $title = sanitize_text_field($_POST['request_title']);
         $description = sanitize_text_field($_POST['request_description']);
         $hours = floatval($_POST['request_hours']); // Convert to a float
+        $date = sanitize_text_field($_POST['request_event_date']);
+
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            return;
+        }
 
         if ($hours <= 0) {
             return;
@@ -89,6 +94,7 @@ function ppa_create_or_update_request_in_db()
                 array(
                     'user_id' => $user_id,
                     'title' => $title,
+                    'event_date' => $date,
                     'description' => $description,
                     'hours' => $hours,
                     'status' => 'pending approval'
@@ -105,6 +111,7 @@ function ppa_create_or_update_request_in_db()
                 array(
                     'user_id' => $user_id,
                     'title' => $title,
+                    'event_date' => $date,
                     'description' => $description,
                     'hours' => $hours,
                 ),
@@ -113,6 +120,7 @@ function ppa_create_or_update_request_in_db()
                 ),
                 array(
                     '%d',
+                    '%s',
                     '%s',
                     '%s',
                     '%f',
@@ -182,6 +190,7 @@ function ppa_render_request_form($isUpdating = false)
     $request_id = 0;
     $user_id = '';
     $requestTitle = '';
+    $requestEventDate = '';
     $requestDescription = '';
     $requestHours = '';
     $requestStatus = '';
@@ -195,6 +204,7 @@ function ppa_render_request_form($isUpdating = false)
         if ($request_data) {
             $user_id = $request_data->user_id;
             $requestTitle = $request_data->title;
+            $requestEventDate = $request_data->event_date;
             $requestDescription = $request_data->description;
             $requestHours = $request_data->hours;
             $requestStatus = $request_data->status;
@@ -256,6 +266,11 @@ function ppa_render_request_form($isUpdating = false)
         <input type="text" id="request_title" name="request_title" required>
         <br>
 
+        <label for="request_title">Event Date:</label>
+        <br>
+        <input type="date" id="request_event_date" name="request_event_date" required>
+        <br>
+
         <label for="request_description">Description of Service:</label>
         <br>
         <textarea id="request_description" name="request_description" required rows="4" cols="50"></textarea>
@@ -289,6 +304,7 @@ function ppa_render_request_form($isUpdating = false)
             if (<?php echo $isUpdating ? 'true' : 'false'; ?>) {
                 // Set the values for form fields using jQuery
                 $('#request_title').val('<?php echo $requestTitle; ?>');
+                $('#request_event_date').val('<?php echo $requestEventDate; ?>');
                 $('#request_description').val('<?php echo $requestDescription; ?>');
                 $('#request_hours').val('<?php echo $requestHours; ?>');
             }
@@ -355,7 +371,7 @@ function ppa_service_hour_requests_list()
                 $request_id = $request->id;
                 echo '<li class="request-cell">';
                 echo '<div>';
-                echo esc_html($request->title);
+                echo esc_html($request->title) . ' - ' . esc_html($request->event_date);
                 echo '<br>';
                 echo esc_html($request->hours) . ' hours<br>';
                 echo '</div>';

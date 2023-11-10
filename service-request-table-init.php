@@ -10,6 +10,7 @@ function ppa_create_service_request_table()
         id INT NOT NULL AUTO_INCREMENT,
         user_id INT NOT NULL,
         title VARCHAR(255) NOT NULL,
+        event_date DATE NOT NULL,
         description TEXT NOT NULL,
         hours DECIMAL(10,2) NOT NULL,
         status VARCHAR(50) NOT NULL,

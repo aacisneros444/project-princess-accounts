@@ -14,17 +14,27 @@ function ppa_update_db_for_decision()
 
     $user_id = $_POST['requestUserId'];
     if ($action == 'approved') {
-        $total_service_hours = $wpdb->get_var(
-            $wpdb->prepare(
-                "SELECT SUM(hours) FROM {$request_table} WHERE user_id = %d AND status = 'approved'",
-                $user_id
-            )
-        );
-        // Update the user meta with the calculated total
-        update_user_meta($user_id, 'service_hours', $total_service_hours);
+        ppa_update_user_hours_db($user_id);
     }
 
     echo json_encode(array('message' => 'Request processed successfully'));
     wp_die();
+}
+
+// Update user service hours in db.
+function ppa_update_user_hours_db($user_id)
+{
+    global $wpdb;
+
+    $service_hour_requests_table = $wpdb->prefix . 'ppa_service_hour_requests';
+    $total_service_hours = $wpdb->get_var(
+        $wpdb->prepare(
+            "SELECT SUM(hours) FROM {$service_hour_requests_table} WHERE user_id = %d AND status = 'approved'",
+            $user_id
+        )
+    );
+
+    // Update the user meta with the calculated total
+    update_user_meta($user_id, 'service_hours', $total_service_hours);
 }
 ?>

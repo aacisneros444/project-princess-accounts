@@ -7,12 +7,12 @@ function ppa_plugin_menu()
         'Manage Service Hour Requests',
         'manage_options',
         'manage-service-hour-requests',
-        'ppa_plugin_page',
+        'ppa_service_hour_request_page',
         'dashicons-admin-plugins'
     );
 }
 
-function ppa_plugin_page()
+function ppa_service_hour_request_page()
 {
     echo '<div class="wrap"><h1>Manage Service Hour Requests</h1></div>';
     echo ppa_render_pending_service_hour_requests();

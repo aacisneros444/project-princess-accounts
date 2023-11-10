@@ -23,7 +23,7 @@ function ppa_custom_login_page()
 add_action('after_setup_theme', 'ppa_hide_admin_bar');
 function ppa_hide_admin_bar()
 {
-    if (is_user_logged_in()) {
+    if (is_user_logged_in() && !current_user_can('administrator')) {
         show_admin_bar(false);
     }
 }
