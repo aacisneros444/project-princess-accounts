@@ -10,6 +10,8 @@ require_once(plugin_dir_path(__FILE__) . 'service-hours-portal.php');
 require_once(plugin_dir_path(__FILE__) . 'service-request-table-init.php');
 require_once(plugin_dir_path(__FILE__) . 'admin-dash-hour-requests.php');
 require_once(plugin_dir_path(__FILE__) . 'handle-request-decision.php');
+require_once(plugin_dir_path(__FILE__) . 'handle-update-request-db.php');
+require_once(plugin_dir_path(__FILE__) . 'get-total-hours-for-member.php');
 require_once(plugin_dir_path(__FILE__) . 'admin-dash-service-hours.php');
 register_activation_hook(__FILE__, 'ppa_create_service_request_table');
 

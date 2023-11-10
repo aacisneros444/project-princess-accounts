@@ -33,6 +33,8 @@ function ppa_member_info_and_events_row($user_id)
 
     ob_start();
 
+    echo '<div class="member-info-and-events-cell" user-id="' . $user_id . '">';
+
     // Table with single cell for member info
     echo '<table class="member-service-table">';
     // Row for table column names
@@ -61,10 +63,12 @@ function ppa_member_info_and_events_row($user_id)
 
     $approved_service_hour_requests = ppa_get_approved_service_hours_requests_db($user_id);
     foreach ($approved_service_hour_requests as $request) {
-        echo ppa_service_event_row($request['title'], $request['event_date'], $request['hours']);
+        echo ppa_service_event_row($request['id'], $request['title'], $request['event_date'], $request['hours']);
     }
 
     echo '</table>';
+
+    echo '</div>';
 
 
     $output = ob_get_clean();
@@ -83,8 +87,8 @@ function ppa_member_info_row($name, $email, $hours, $avatar_url)
     echo $name;
     echo '</div>';
     echo '</td>';
-    echo '<td class="user-info-cell ">' . $email . '</td>';
-    echo '<td class="user-info-cell ">' . $hours . '</td>';
+    echo '<td class="user-info-cell">' . $email . '</td>';
+    echo '<td class="user-info-cell user-hours-cell">' . $hours . '</td>';
     echo '</tr>';
 
     $output = ob_get_clean();
@@ -92,11 +96,11 @@ function ppa_member_info_row($name, $email, $hours, $avatar_url)
 }
 
 // Create a service event row
-function ppa_service_event_row($event_name, $date, $hours)
+function ppa_service_event_row($request_id, $event_name, $date, $hours)
 {
     ob_start();
 
-    echo '<tr>';
+    echo '<tr request-id="' . $request_id . '">';
     echo '<td class="editable-cell" data-column="event_name">' . $event_name . '</td>';
     echo '<td class="editable-cell" data-column="event_date">' . $date . '</td>';
     echo '<td class="editable-cell" data-column="event_hours">' . $hours . '</td>';
@@ -109,6 +113,7 @@ function ppa_service_event_row($event_name, $date, $hours)
     return $output;
 }
 
+// Get a list of the active member ids by querying the requests table.
 function ppa_get_active_user_ids_db()
 {
     global $wpdb;
@@ -119,6 +124,7 @@ function ppa_get_active_user_ids_db()
     return $unique_user_ids;
 }
 
+// Get user info from db.
 function ppa_get_user_info_db($user_id)
 {
     global $wpdb;
@@ -143,6 +149,7 @@ function ppa_get_user_info_db($user_id)
     );
 }
 
+// Get all approved service hour requests for a user.
 function ppa_get_approved_service_hours_requests_db($user_id)
 {
     global $wpdb;
@@ -151,7 +158,7 @@ function ppa_get_approved_service_hours_requests_db($user_id)
 
     $approved_service_hours = $wpdb->get_results(
         $wpdb->prepare(
-            "SELECT title, event_date, hours FROM $table_name WHERE user_id = %d AND status = 'approved'",
+            "SELECT id, title, event_date, hours FROM $table_name WHERE user_id = %d AND status = 'approved'",
             $user_id
         ),
         ARRAY_A
