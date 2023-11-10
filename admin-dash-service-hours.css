@@ -62,3 +62,7 @@
   max-width: 50px;
   margin-right: 5%;
 }
+
+.delete-all-data-btn {
+  margin-top: 1.5rem;
+}

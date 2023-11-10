@@ -15,6 +15,7 @@ require_once(plugin_dir_path(__FILE__) . 'get-total-hours-for-member.php');
 require_once(plugin_dir_path(__FILE__) . 'admin-dash-service-hours.php');
 require_once(plugin_dir_path(__FILE__) . 'gen-active-member-spreadsheet.php');
 require_once(plugin_dir_path(__FILE__) . 'service-history.php');
+require_once(plugin_dir_path(__FILE__) . 'delete-service-hour-requests-db.php');
 register_activation_hook(__FILE__, 'ppa_create_service_request_table');
 
 

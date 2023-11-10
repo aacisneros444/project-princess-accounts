@@ -59,6 +59,23 @@ if (window.location.href.includes("view-active-member-hours")) {
         $(this).text("Save");
       }
     });
+
+    // Function to handle delete button click
+    function handleDeleteButtonClick() {
+      var userInput = prompt(
+        "WARNING: this will delete all existing service hour data! This cannot be undone. If proceeding, consider downloading the service data from this period using the link at the top of this page. To confirm deletion, type 'delete all data':"
+      );
+      if (userInput && userInput.toLowerCase() === "delete all data") {
+        deleteAllServiceRequestsDB();
+      } else {
+        alert("Deletion canceled or incorrect input.");
+      }
+    }
+
+    // Delete button click event
+    $("#delete-all-data-btn").click(function () {
+      handleDeleteButtonClick();
+    });
   });
 }
 // Save edited event to db.
@@ -92,12 +109,31 @@ function changeMemberHoursOnPage(toUpdateTD, forUserID) {
     type: "POST",
     url: ajaxurl, // WordPress AJAX URL
     data: {
-      action: "get_total_hours_for_member_db",
+      action: "ppa_get_total_hours_for_member_db",
       requestUserId: forUserID,
     },
     success: function (response) {
       var responseObject = JSON.parse(response);
       toUpdateTD.text(responseObject.hours);
+    },
+  });
+}
+
+// Ask server to delete all service requests in the db.
+function deleteAllServiceRequestsDB() {
+  jQuery.ajax({
+    type: "POST",
+    url: ajaxurl, // WordPress AJAX URL
+    data: {
+      action: "ppa_delete_service_hour_requests_db",
+    },
+    success: function (response) {
+      console.log(response);
+      alert("Data deleted successfully!");
+      location.reload();
+    },
+    error: function (err) {
+      console.log("error!", err);
     },
   });
 }

@@ -1,6 +1,6 @@
 <?php
 // ajax server-side logic to get total member hours from db
-add_action('wp_ajax_get_total_hours_for_member_db', 'ppa_get_total_hours_for_member_db');
+add_action('wp_ajax_ppa_get_total_hours_for_member_db', 'ppa_get_total_hours_for_member_db');
 function ppa_get_total_hours_for_member_db()
 {
     global $wpdb;

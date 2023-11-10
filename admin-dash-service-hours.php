@@ -23,6 +23,9 @@ function ppa_render_active_service_member_hours_page()
     echo '<p>You can download this data to open in Excel/Google Sheets <a href="' . esc_url($downloadLink) . '">here</a> (note: edits made to downloaded data will not be reflected on the website)</p>';
 
     ppa_render_active_service_member_table();
+
+    // Add the delete button and confirmation script
+    echo '<button class="delete-all-data-btn" id="delete-all-data-btn">DELETE ALL SERVICE DATA</button>';
 }
 
 function ppa_render_active_service_member_table()
@@ -174,6 +177,37 @@ function ppa_get_approved_service_hours_requests_db($user_id)
     );
 
     return $approved_service_hours;
+}
+
+function ppa_delete_service_data_button()
+{
+    ob_start();
+
+    // Add the Delete All Data Button
+    echo '<button id="delete-all-data-btn" onclick="confirmDelete()">DELETE ALL SERVICE DATA</button>';
+
+    // Add the confirmation modal
+    echo '<div id="deleteConfirmationModal" class="modal fade" role="dialog">';
+    echo '  <div class="modal-dialog">';
+    echo '    <div class="modal-content">';
+    echo '      <div class="modal-header">';
+    echo '        <h4 class="modal-title">Confirmation</h4>';
+    echo '        <button type="button" class="close" data-dismiss="modal">&times;</button>';
+    echo '      </div>';
+    echo '      <div class="modal-body">';
+    echo '        <p>Please enter <strong>DELETE ALL DATA</strong> to confirm:</p>';
+    echo '        <input type="text" id="deleteConfirmationInput">';
+    echo '      </div>';
+    echo '      <div class="modal-footer">';
+    echo '        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>';
+    echo '        <button type="button" class="btn btn-danger" onclick="deleteAllData()">Confirm</button>';
+    echo '      </div>';
+    echo '    </div>';
+    echo '  </div>';
+    echo '</div>';
+
+    $output = ob_get_clean();
+    return $output;
 }
 
 ?>
