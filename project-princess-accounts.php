@@ -1,6 +1,8 @@
 <?php
 /*
 Plugin Name: Project Princess Accounts
+Description: Implements custom accounts system for Project Princess members to manage service hours. 
+Author: Alex Cisneros
 */
 
 require_once(plugin_dir_path(__FILE__) . 'login.php');
