@@ -15,7 +15,11 @@ function ppa_custom_login_page()
         echo '<p>Don\'t have an account? <a href="' . wp_registration_url() . '">Register here</a></p>';
     } else {
         echo 'Successfully signed in.';
-        echo '<script>window.location = "' . home_url('member-profile') . '";</script>';
+        echo '<script>';
+        echo 'if (window.location.href.includes("login")) {';
+        echo '  window.location = "' . home_url('member-profile') . '";';
+        echo '}';
+        echo '</script>';
     }
 }
 

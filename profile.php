@@ -132,6 +132,11 @@ function compress($source, $destination, $quality)
         $image = imagecreatefromgif($source);
     elseif ($info['mime'] == 'image/png')
         $image = imagecreatefrompng($source);
+    elseif ($info['mime'] == 'image/webp')
+        $image = imagecreatefromwebp($source);
+    else {
+        return false;
+    }
 
     imagejpeg($image, $destination, $quality);
 
