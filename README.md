@@ -6,5 +6,8 @@ This code could definitely be more organized with better comments, directory str
 
 ### Demo
 
-See a video of me demonstrating functionality here:
+User Tutorial:\
 https://www.youtube.com/watch?v=X3mDjrBglyc
+
+Officer/Admin Tutorial:\
+https://drive.google.com/file/d/15LuuMhcnhYRWAxZsCXd1pXQ0-bBJKsfs/view?usp=sharing
